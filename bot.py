@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import asyncio
 import logging
-from config import dp, bot
+import sys
+from config import bot, dp
 from handlers import *  # импортируем все обработчики
 
 # Настройка логирования
@@ -21,6 +22,7 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
+    # Правильный запуск для Python 3.7+
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
