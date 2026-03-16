@@ -1,6 +1,6 @@
 from aiogram import types, F
 from aiogram.filters import Command
-from aiogram.types import ChatMemberUpdated, ChatMemberStatus
+from aiogram.types import ChatMemberUpdated, ChatMember
 from config import bot, dp, DEFAULT_SETTINGS
 from database import db
 from filters import ModerationFilters
@@ -95,7 +95,7 @@ async def cmd_warn(message: types.Message):
     """Предупреждение"""
     await message.answer("⚠️ Функция предупреждений в разработке")
 
-# ==================== ОБРАБОТЧИКИ ====================
+# ==================== ОБРАБОТЧИКИ СОБЫТИЙ ====================
 
 @dp.message(F.new_chat_members)
 async def on_user_join(message: types.Message):
