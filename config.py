@@ -4,34 +4,28 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 
-# Загружаем переменные окружения из .env файла
 load_dotenv()
 
-# Получаем токен
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 if not BOT_TOKEN:
-    raise ValueError("❌ BOT_TOKEN не найден в .env файле! Проверьте переменные окружения.")
+    raise ValueError("❌ BOT_TOKEN не найден в .env файле!")
 
-# Создаём бота с правильными параметрами для aiogram 3.x
-# parse_mode передаётся через DefaultBotProperties
+LOG_CHANNEL = os.getenv('LOG_CHANNEL')  # ID канала для логов (например -1001234567890)
+
 bot = Bot(
     token=BOT_TOKEN,
-    default=DefaultBotProperties(
-        parse_mode=ParseMode.HTML  # правильный способ для новой версии
-    )
+    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
 )
-
-# Создаём диспетчер
 dp = Dispatcher()
 
-# Настройки по умолчанию для групп
 DEFAULT_SETTINGS = {
-    'delete_spam': True,        # удалять спам
-    'delete_links': False,       # удалять ссылки
-    'delete_swear': True,        # удалять мат
-    'welcome_enabled': True,     # приветствие новых
+    'delete_spam': True,
+    'delete_links': False,
+    'delete_swear': True,
+    'welcome_enabled': True,
     'welcome_text': '👋 Добро пожаловать, {name}!',
-    'captcha_enabled': False,    # капча для новых
-    'min_age_hours': 24,         # мин. возраст аккаунта
-    'admin_ids': []              # ID админов (пока пусто)
+    'captcha_enabled': False,
+    'min_age_hours': 24,
+    'warn_limit': 3,
+    'admin_ids': []
 }
