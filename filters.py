@@ -3,31 +3,27 @@ import re
 class ModerationFilters:
     def __init__(self, settings):
         self.settings = settings
-    
+
     def check_message(self, text):
-        """Проверяет текст на нарушения"""
         if not text:
             return []
-        
+
         reasons = []
-        
-        # Проверка на спам (повторяющиеся символы)
+
         if self.settings.get('delete_spam'):
             if self._is_spam(text):
                 reasons.append('спам')
-        
-        # Проверка на ссылки
+
         if self.settings.get('delete_links'):
             if self._has_links(text):
                 reasons.append('ссылки')
-        
-        # Проверка на мат
+
         if self.settings.get('delete_swear'):
             if self._has_swear(text):
                 reasons.append('мат')
-        
+
         return reasons
-    
+
     def _has_links(self, text):
         link_patterns = [
             r'https?://\S+',
@@ -40,7 +36,7 @@ class ModerationFilters:
             if re.search(pattern, text_lower):
                 return True
         return False
-    
+
     def _has_swear(self, text):
         swear_words = ['хуй', 'пизд', 'бля', 'еба', 'нах', 'сука', 'падла', 'cock', 'fuck', 'shit']
         text_lower = text.lower()
@@ -48,11 +44,9 @@ class ModerationFilters:
             if word in text_lower:
                 return True
         return False
-    
+
     def _is_spam(self, text):
-        # Простейшая проверка: много повторяющихся символов
         if len(text) > 20:
-            # Проверка на повторяющиеся буквы (например, "аааааа")
             for i in range(len(text) - 3):
                 if text[i] == text[i+1] == text[i+2] == text[i+3]:
                     return True
